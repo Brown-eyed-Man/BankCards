@@ -1,4 +1,6 @@
-package ru.netology;
+package ru.netology.featureCards;
+
+import ru.netology.CreditCard;
 
 public class CreditCardCashback extends CreditCard {
     private int cashback = 5;
@@ -13,7 +15,7 @@ public class CreditCardCashback extends CreditCard {
     public boolean pay(long amount) {
         if (amount >= necessaryAmountForCashback) {
             if (super.pay(amount)) {
-                long cashback = amount * 5 / 100;
+                long cashback = (long) Math.floor((double) (amount * this.cashback) / 100);
                 replenish(cashback);
                 System.out.printf("Начислен кэшбек в размере %d.\n", cashback);
                 return true;
@@ -22,10 +24,13 @@ public class CreditCardCashback extends CreditCard {
         return super.pay(amount);
     }
 
+    // Установка необходимой суммы, при оплате от которой вы получаете установленный кэшбэк.
     public void setNecessaryAmountForCashback(long necessaryAmountForCashback) {
         this.necessaryAmountForCashback = necessaryAmountForCashback;
+        System.out.println("Изменена сумма для получения кэшбека на " + necessaryAmountForCashback);
     }
 
+    // Установка кэшбэка
     public void setCashback(int cashback) {
         if (cashback > 0 && cashback < 100) {
             this.cashback = cashback;

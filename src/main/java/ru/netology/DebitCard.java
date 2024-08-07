@@ -1,9 +1,6 @@
 package ru.netology;
 
 public class DebitCard extends BankCard {
-    public DebitCard() {
-    }
-
     @Override
     public void getBalance() {
         System.out.printf("Текущий баланс дебетовой карты: %d.\n", balance);
@@ -17,19 +14,17 @@ public class DebitCard extends BankCard {
 
     @Override
     public boolean pay(long amount) {
-        if (balance > amount) {
+        if (balance >= amount) {
             balance -= amount;
-            System.out.printf("Произведена оплата в размере %d.\n", amount);
             return true;
         }
-        System.out.println("Недостаточно средств для совершения оплаты.");
+        System.out.printf("Недостаточно средств для совершения оплаты в размере %d.\n", amount);
         return false;
     }
 
     @Override
     public boolean replenish(long amount) {
         balance += amount;
-        System.out.printf("Произведено пополнение в размере %d.\n", amount);
         return true;
     }
 }

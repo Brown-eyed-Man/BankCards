@@ -5,10 +5,11 @@ public class CreditCard extends BankCard {
     private long creditFunds;
 
     public CreditCard(long creditLimit) {
-        this.creditLimit = creditLimit;
-        creditFunds = creditLimit;
-        System.out.println("Кредитная карта с лимитом " + creditLimit);
-        getAvailableFunds();
+        if (setCreditLimit(creditLimit)) {
+            creditFunds = creditLimit;
+            System.out.println("Кредитная карта с лимитом " + creditLimit);
+            getAvailableFunds();
+        }
     }
 
     @Override
@@ -35,7 +36,7 @@ public class CreditCard extends BankCard {
 
     @Override
     public boolean pay(long amount) {
-        if (amount > creditLimit + creditFunds) {
+        if (amount > balance + creditFunds) {
             System.out.printf("Недостаточно средств для совершения оплаты на сумму %d.\n", amount);
             return false;
         } else if (balance > 0 && balance > amount) {
@@ -50,10 +51,11 @@ public class CreditCard extends BankCard {
         return true;
     }
 
+    // Установка кредитного лимита
     public boolean setCreditLimit(long creditLimit) {
         if (creditLimit > 0) {
             this.creditLimit = creditLimit;
-            System.out.printf("Кредитный лимит изменен на %d.\n", creditLimit);
+            System.out.printf("Установление кредитный лимит в размере %d.\n", creditLimit);
             return true;
         } else {
             System.out.println("Не удалось заменить кредитный лимит.");
